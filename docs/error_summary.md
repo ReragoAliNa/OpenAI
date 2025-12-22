@@ -64,5 +64,21 @@
 *   **最终方案**: 放弃在 Windows 原生环境运行，全面迁移至 **WSL2 (Ubuntu)** 环境。
 
 ---
-*总结人: Antigravity*
+
+## 5. 终端启动问题
+
+### 5.1  Windows 与 Linux 换行符冲突
+**症状**:
+```
+scripts/wsl_run.sh: line 3: $'\r': command not found
+scripts/wsl_run.sh: line 43: syntax error: unexpected end of file
+```
+**原因**: Windows 与 Linux 换行符冲突
+**解决方案**:
+``
+sed -i 's/\r$//' scripts/wsl_run.sh
+bash scripts/wsl_run.sh
+ ```
+
+---
 *日期: 2025-12-23*
