@@ -22,7 +22,7 @@ export MESA_GL_VERSION_OVERRIDE=3.3
 source /root/openai_hide_env/bin/activate
 
 # 进入项目目录
-cd "/mnt/e/新建文件夹/OpenAI-/multi-agent-emergence-environments"
+cd "/mnt/e/OpenAI/multi-agent-emergence-environments"
 
 # 运行实验
 echo "正在启动 OpenAI Hide and Seek 仿真..."

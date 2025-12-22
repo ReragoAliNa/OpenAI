@@ -49,7 +49,7 @@ source openai_hide_env/bin/activate
 ### 5. 克隆/复制项目
 ```bash
 # 如果项目在 Windows 中，可以访问
-cd /mnt/e/新建文件夹/OpenAI-
+cd /mnt/e/OpenAI
 
 # 或者重新克隆
 # git clone <repository_url>
@@ -99,7 +99,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.mujoco/mujoco210/bin
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 export LIBGL_ALWAYS_INDIRECT=1
 
-cd /mnt/e/新建文件夹/OpenAI-/multi-agent-emergence-environments
+cd /mnt/e/OpenAI/multi-agent-emergence-environments
 source ~/openai_hide_env/bin/activate
 python bin/examine.py examples/hide_and_seek_quadrant.jsonnet examples/hide_and_seek_quadrant.npz
 ```
