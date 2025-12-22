@@ -75,10 +75,10 @@ scripts/wsl_run.sh: line 43: syntax error: unexpected end of file
 ```
 **原因**: Windows 与 Linux 换行符冲突
 **解决方案**:
-``
+```
 sed -i 's/\r$//' scripts/wsl_run.sh
 bash scripts/wsl_run.sh
- ```
+```
 
 ---
 *日期: 2025-12-23*
