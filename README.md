@@ -83,7 +83,20 @@ We solved several critical compatibility issues during the porting:
   - `run_experiment.ps1`: Windows PowerShell launcher.
 - `mujoco-worldgen/`: Procedural environment generation engine.
 - `multi-agent-emergence-environments/`: Core RL environments and pre-trained policies.
-- `docs/`: (Archived) Original detailed reports and setup guides.
+- `index.html`, `index.css`, `main.js`: **Intelligence Dashboard** — A premium web interface for monitoring and controlling the simulation.
+
+---
+
+## 🖥 Intelligence Dashboard
+
+We've designed a futuristic control interface inspired by the original OpenAI research presentation.
+To view it:
+1.  Open `index.html` in your browser.
+2.  The dashboard provides real-time visualization of:
+    - **Evolution Timeline**: Track the emergence phases from "Running" to "Box Surfing".
+    - **Neural Engine Logs**: Live feedback from the AI policies.
+    - **Metric Analytics**: Hider/Seeker reward margins and entropy loss.
+    - **Agent Status**: Monitor the real-time state of each entity.
 
 ---
 
