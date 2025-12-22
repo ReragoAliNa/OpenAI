@@ -1,31 +1,73 @@
 # OpenAI Hide and Seek Reproduction
 
-This project is a reproduction of the OpenAI Hide and Seek experiment in WSL2.
+This project is a high-fidelity reproduction of the OpenAI Hide and Seek experiment, optimized for **WSL2** (Ubuntu) and **Windows** environments.
 
-## Project Structure
+## 🚀 Quick Start (WSL2)
 
-- `docs/`: Documentation and experiment reports.
-  - `WSL2运行指南.md`: Instructions for setting up and running in WSL2.
-  - `实验报告.md`: Analysis of the experiment results.
-  - `安装指南.md`: Basic installation steps.
-- `scripts/`: Helper scripts for setup and execution.
-  - `wsl_run.sh`: Main script to run the simulation in WSL2.
-  - `wsl_setup.sh`: Script to automate dependency installation in WSL2.
-  - Various `.ps1` files for Windows/WSL interoperability.
-- `mujoco-worldgen/`: Environment generation code.
-- `multi-agent-emergence-environments/`: Multi-agent training and testing environments.
+If you have WSL2 set up, run the following:
+```bash
+# 1. Automatic installation of dependencies
+bash scripts/wsl_setup.sh
 
-## How to Run
+# 2. Run the simulation
+bash scripts/wsl_run.sh
+```
 
-1. Ensure WSL2 and MuJoCo are set up (see `docs/WSL2运行指南.md`).
-2. Run the simulation using the provided script:
-   ```bash
-   bash scripts/wsl_run.sh
-   ```
+---
 
-## Requirements
+## 🛠 Prerequisites & Required Software
 
-- WSL2 (Ubuntu 20.04 or later)
-- Python 3.7 (in virtualenv)
-- MuJoCo 2.1.0
-- TensorFlow 1.15.0
+To run this project successfully, you need the following software installed:
+
+### 1. Core Environment
+- **WSL2 (Windows Subsystem for Linux)**: Recommended Ubuntu 20.04 or 22.04.
+- **Python 3.7**: Required for TensorFlow 1.15.0 and `baselines` compatibility.
+- **MuJoCo 2.1.0**: The physics engine. Download the Linux version for WSL2 or Windows version for native.
+
+### 2. Visualization (Critical for GUI)
+- **VcXsrv Windows X Server**: Required to display the MuJoCo simulation window from WSL2 to Windows.
+  - [Download VcXsrv](https://sourceforge.net/projects/vcxsrv/)
+  - **Launch settings**: 
+    - `Multiple windows`
+    - `Display number: 0`
+    - `Start no client`
+    - **Check** `Disable access control` (extremely important)
+
+---
+
+## ⚙️ Configuration & Environment Variables
+
+### WSL2 Configuration
+The following environment variables are automatically managed by `scripts/wsl_run.sh`:
+- `LD_LIBRARY_PATH`: Includes `~/.mujoco/mujoco210/bin`.
+- `DISPLAY`: Set to your Windows Host IP (e.g., `172.x.x.x:0.0`).
+- `MUJOCO_GL`: Set to `glfw` or `egl`.
+- `LD_PRELOAD`: Preloads `/usr/lib/x86_64-linux-gnu/libGLEW.so` to fix common WSL2 OpenGL issues.
+
+### Python Environment
+- **TensorFlow**: `1.15.0`
+- **Gym**: `0.10.8`
+- **MuJoCo-py**: `2.1.2.14` (Compatible with MuJoCo 210)
+
+---
+
+## 📂 Project Structure
+
+- `docs/`: Guides and reports.
+  - `WSL2运行指南.md`: Comprehensive WSL2 setup and troubleshooting.
+  - `安装指南.md`: Windows/Conda specific installation guide.
+- `scripts/`: Implementation scripts.
+  - `wsl_setup.sh`: Automated dependency installer for WSL2.
+  - `wsl_run.sh`: Main launcher for WSL2.
+  - `run_experiment.ps1`: PowerShell launcher for Windows Native.
+- `mujoco-worldgen/`: OpenAI's procedurally generated world engine.
+- `multi-agent-emergence-environments/`: The core Hide and Seek environments.
+
+---
+
+## ❓ Common Issues
+
+- **GLEW initialization error**: This is fixed in `wsl_run.sh` by using `LD_PRELOAD`.
+- **Display Connection Refused**: Ensure VcXsrv is running and "Disable access control" is checked.
+- **ModuleNotFoundError (mae_envs)**: Run `pip install -e multi-agent-emergence-environments/` to install in editable mode.
+
