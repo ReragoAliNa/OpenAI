@@ -1,0 +1,7 @@
+click
+xmltodict
+scipy
+gym
+jsonnet
+numpy-stl
+mujoco-py
