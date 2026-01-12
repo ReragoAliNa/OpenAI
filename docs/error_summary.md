@@ -10,8 +10,8 @@
 *   **症状**: 脚本运行报错 `cd: no such file or directory` 或 `File not found`。
 *   **原因**: 原始脚本中硬编码了旧的路径（如 `e:\新建文件夹\OpenAI-`），而当前部署路径为 `e:\OpenAI`。
 *   **解决方案**: 
-    *   全局搜索并替换脚本（`wsl_run.sh`, `wsl_setup.sh`, `run_experiment.ps1`）中的路径。
-    *   在 WSL 中使用 `/mnt/e/OpenAI` 访问 Windows 磁盘分区。
+    *   **已修复**: 核心脚本（`wsl_run.sh`, `wsl_setup.sh`, `bridge_server.py`）现在采用动态路径检测（通过脚本所在位置自动推导项目根目录），支持在任意磁盘或文件夹下运行。
+    *   在 WSL 中通过 `/mnt/[drive]/[path]` 访问 Windows 磁盘分区。
 
 ### 1.2 模块未安装 (ModuleNotFoundError)
 *   **症状**: `ModuleNotFoundError: No module named 'mae_envs'` 或 `mujoco_worldgen`。
@@ -54,6 +54,15 @@
     *   在宿主机运行 VcXsrv，并勾选 **"Disable access control"**。
     *   在 WSL2 中设置：`export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0.0`。
 
+### 3.3 使用 CPU 渲染 (OSMesa 模式)
+*   **场景**: 无独立显卡环境、显卡驱动在 WSL2 下不稳定，或需要进行离线视频渲染。
+*   **原因**: 默认渲染后端（glfw/egl）依赖硬件加速，在某些虚拟化环境下可能失效。
+*   **解决方案**: 
+    *   安装 OSMesa 依赖：`sudo apt-get install libosmesa6-dev`。
+    *   修改环境变量：在启动脚本中设置 `export MUJOCO_GL=osmesa`。
+    *   **优点**: 兼容性最强，不依赖 X Server。
+    *   **缺点**: 渲染帧率较低，相比 GPU 性能有明显下降。
+
 ---
 
 ## 4. 平台架构限制
@@ -81,4 +90,5 @@ bash scripts/wsl_run.sh
 ```
 
 ---
-*日期: 2025-12-23*
+*最后更新日期: 2026-01-12*
+

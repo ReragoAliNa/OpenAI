@@ -10,8 +10,10 @@ from flask_socketio import SocketIO, emit
 # Force eventlet for async performance
 eventlet.monkey_patch()
 
-# Set base directory to the project root (e:\OpenAI mapped to /mnt/e/OpenAI)
-BASE_DIR = "/mnt/e/OpenAI"
+# Set base directory to the project root (dynamic path detection)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# Map Windows path to WSL path if needed (default to direct use if already in WSL)
+WSL_BASE_DIR = BASE_DIR.replace("e:", "/mnt/e").replace("\\", "/") # Simple fallback
 app = Flask(__name__, static_folder=BASE_DIR)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -51,9 +53,9 @@ def simulation_worker():
     env = os.environ.copy()
     env["MUJOCO_GL"] = "egl"
     env["LD_LIBRARY_PATH"] = "/root/.mujoco/mujoco210/bin:/usr/lib/wsl/lib:/usr/lib/x86_64-linux-gnu:" + env.get("LD_LIBRARY_PATH", "")
-    env["PYTHONPATH"] = "/mnt/e/OpenAI/multi-agent-emergence-environments:" + env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = f"{WSL_BASE_DIR}/multi-agent-emergence-environments:" + env.get("PYTHONPATH", "")
 
-    cwd = "/mnt/e/OpenAI/multi-agent-emergence-environments"
+    cwd = f"{WSL_BASE_DIR}/multi-agent-emergence-environments"
     cmd = [
         "python", "bin/examine.py", 
         "examples/hide_and_seek_quadrant.jsonnet", 

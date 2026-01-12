@@ -31,8 +31,11 @@ export MESA_GL_VERSION_OVERRIDE=3.3
 # 激活虚拟环境
 source /root/openai_hide_env/bin/activate
 
+# 动态获取项目根目录路径
+PROJECT_ROOT=$(cd "$(dirname "$0")/.." && pwd)
+
 # 进入项目目录
-cd "/mnt/e/OpenAI/multi-agent-emergence-environments"
+cd "$PROJECT_ROOT/multi-agent-emergence-environments"
 
 # 运行实验
 echo "正在启动 OpenAI Hide and Seek 仿真 (GPU 加速已开启)..."

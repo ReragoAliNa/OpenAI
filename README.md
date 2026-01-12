@@ -9,7 +9,8 @@ This project is a high-fidelity reproduction of the OpenAI Hide and Seek experim
 The most reliable way to run this experiment is via WSL2.
 
 ```bash
-# 1. Automatic installation of dependencies (Python 3.7, TensorFlow 1.15, MuJoCo 2.1.0)
+# 1. Fix line endings (if created on Windows) and run setup
+sed -i 's/\r$//' scripts/*.sh
 bash scripts/wsl_setup.sh
 
 # 2. Run the pre-trained quadrant environment simulation
@@ -46,15 +47,9 @@ To see the agents in action, you need an X Server on Windows:
 4. **Install Packages**:
    ```bash
    pip install tensorflow==1.15.0
-   pip install -e mujoco-worldgen/
-   pip install -e multi-agent-emergence-environments/
+   cd mujoco-worldgen && pip install -e .
+   cd ../multi-agent-emergence-environments && pip install -e .
    ```
-
-### Windows Native (Legacy/Experimental)
-Running natively on Windows is challenging due to TensorFlow 1.15's lack of official support for Python 3.7 on Windows.
-- Use Conda: `conda create -n openai_hide_py37 python=3.7`.
-- Path Configuration: Ensure `mujoco210\bin` is in your System PATH.
-- *Note: If errors persist, please switch to the WSL2 method.*
 
 ---
 
@@ -80,7 +75,6 @@ We solved several critical compatibility issues during the porting:
 - `scripts/`: Helper utilities.
   - `wsl_setup.sh`: Automated environment builder.
   - `wsl_run.sh`: Main launcher with X11 forwarding config.
-  - `run_experiment.ps1`: Windows PowerShell launcher.
 - `mujoco-worldgen/`: Procedural environment generation engine.
 - `multi-agent-emergence-environments/`: Core RL environments and pre-trained policies.
 - `index.html`, `index.css`, `main.js`: **Intelligence Dashboard** — A premium web interface for monitoring and controlling the simulation.
@@ -104,10 +98,8 @@ To view it:
 
 | Issue | Solution |
 | :--- | :--- |
-| **ModuleNotFoundError: mae_envs** | Run `pip install -e multi-agent-emergence-environments/` |
-| **Connection Refused (Display)** | Restart VcXsrv and ensure "Disable access control" is checked. |
-| **GLFW error/Black screen** | Ensure `MUJOCO_GL=glfw` and `export DISPLAY` is set correctly in WSL. |
-| **TF 1.15 on Win 11** | This combination is unstable; use the provided WSL2 scripts. |
+| **TF 1.15 Version Error** | Ensure you are using Python 3.7. |
+| **\r command not found** | Run `sed -i 's/\r$//' scripts/*.sh` to fix Windows line endings. |
 
 ---
 
