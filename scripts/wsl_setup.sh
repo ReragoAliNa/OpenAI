@@ -55,7 +55,7 @@ python -m pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade p
 
 # 6. 进入项目目录
 echo "[6/8] 进入项目目录..."
-cd "/mnt/d/OpenAI"
+cd "/mnt/e/OpenAI"
 
 # 7. 安装 Python 依赖
 echo "[7/8] 安装 Python 依赖（这可能需要几分钟）..."
@@ -73,6 +73,6 @@ echo "✓ 环境配置成功！"
 echo "======================================"
 echo ""
 echo "现在可以运行实验："
-echo "  cd /mnt/d/OpenAI/multi-agent-emergence-environments"
+echo "  cd /mnt/e/OpenAI/multi-agent-emergence-environments"
 echo "  python bin/examine.py examples/hide_and_seek_quadrant.jsonnet examples/hide_and_seek_quadrant.npz"
 echo ""
