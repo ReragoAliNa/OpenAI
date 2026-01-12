@@ -40,6 +40,7 @@ class Floor(Obj):
             raise ValueError("Invalid geom_type: " + self.geom_type)
         geom['@condim'] = 3
         geom['@name'] = self.name
+        geom['@material'] = 'grid'  # Use the high-quality grid material
 
         # body is necessary to place sites.
         body = OrderedDict()

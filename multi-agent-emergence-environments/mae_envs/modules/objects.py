@@ -65,7 +65,10 @@ class Boxes(EnvModule):
         for i in range(self.curr_n_boxes):
             char = chr(ord('A') + i % 26)
             geom = Geom("box", self.box_size_array[i, :], name=f'moveable_box{i}')
-            geom.set_material(Material(texture="chars/" + char + ".png"))
+            geom.add_transform(set_geom_attr_transform('rgba', [0.22, 0.72, 0.15, 1.0])) # OpenAI Box Green
+
+            # Removed character texture for cleaner look
+
             geom.add_transform(set_geom_attr_transform('mass', self.box_mass))
             if self.mark_box_corners:
                 for j, (x, y) in enumerate([[0, 0], [0, 1], [1, 0], [1, 1]]):
@@ -160,8 +163,11 @@ class Ramps(EnvModule):
 
         for i in range(self.n_ramps):
             char = chr(ord('A') + i % 26)
-            geom = geom = ObjFromXML('ramp', name=f"ramp{i}")
-            geom.set_material(Material(texture="chars/" + char + ".png"))
+            geom = ObjFromXML('ramp', name=f"ramp{i}")
+            geom.add_transform(set_geom_attr_transform('rgba', [0.22, 0.72, 0.15, 1.0])) # OpenAI Ramp Green
+
+            # Removed character texture for cleaner look
+
             if self.friction is not None:
                 geom.add_transform(set_geom_attr_transform('friction', self.friction))
 

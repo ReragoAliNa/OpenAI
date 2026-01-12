@@ -302,7 +302,7 @@ def make_env(n_substeps=15, horizon=80, deterministic_mode=False,
 
     env.add_module(Agents(n_hiders + n_seekers,
                           placement_fn=agent_placement_fn,
-                          color=[np.array((66., 235., 244., 255.)) / 255] * n_hiders + [(1., 0., 0., 1.)] * n_seekers,
+                          color=[(0.18, 0.73, 0.95, 1.0)] * n_hiders + [(0.95, 0.3, 0.3, 1.0)] * n_seekers,
                           friction=other_friction,
                           polar_obs=polar_obs))
     if np.max(n_boxes) > 0:

@@ -62,6 +62,23 @@ In this reproduction, we verify the stages of multi-agent evolution:
 3. **Ramp Exploits**: Seekers learn to use ramps to jump over walls.
 4. **Advanced Defense**: Hiders learn to steal/move ramps and lock them to neutralize Seeker advantages.
 
+## 🎨 Visual Reproduction & Aesthetics
+
+Since January 2026, we have overhauled the rendering pipeline to strictly match the visual style of the original OpenAI "Emergent Tool Use" paper and video.
+
+### Key Visual Updates:
+*   **Signature Green Objects**: Changed Boxes and Ramps from generic yellow/beige to the specific **OpenAI Green** (`#38b826` equivalent).
+*   **Studio Lighting**:
+    *   Replaced top-down lighting with **angled directional sunlight** (`-1 -1 -2`) to illuminate wall faces and create realistic shadows.
+    *   Added **Ambient Fill** and **Back Lighting** to prevent pitch-black shadows on walls.
+    *   Removed foggy/hazy effects for a crisp, "laboratory" white aesthetic.
+*   **High-Contrast Floor**:
+    *   Updated floor texture to a high-contrast **Dark/Light Gray Checkerboard**.
+    *   Increased texture density to **15x15** (creating a 30x30 grid) to perfectly align visually with the 30x30 logic grid.
+    *   Added slight floor **reflectance** for a premium look.
+*   **Standardized Geometry**:
+    *   Fixed wall heights to **0.5 units** (matching agent height) instead of the previous 4.0 unit "fortress walls".
+
 ### Technical Resolutions
 We solved several critical compatibility issues during the porting:
 *   **Assertion Fixes**: Patched `xmltodict` usage in `mujoco-worldgen` where dictionary types caused version-specific crashes.
@@ -77,20 +94,6 @@ We solved several critical compatibility issues during the porting:
   - `wsl_run.sh`: Main launcher with X11 forwarding config.
 - `mujoco-worldgen/`: Procedural environment generation engine.
 - `multi-agent-emergence-environments/`: Core RL environments and pre-trained policies.
-- `index.html`, `index.css`, `main.js`: **Intelligence Dashboard** — A premium web interface for monitoring and controlling the simulation.
-
----
-
-## 🖥 Intelligence Dashboard
-
-We've designed a futuristic control interface inspired by the original OpenAI research presentation.
-To view it:
-1.  Open `index.html` in your browser.
-2.  The dashboard provides real-time visualization of:
-    - **Evolution Timeline**: Track the emergence phases from "Running" to "Box Surfing".
-    - **Neural Engine Logs**: Live feedback from the AI policies.
-    - **Metric Analytics**: Hider/Seeker reward margins and entropy loss.
-    - **Agent Status**: Monitor the real-time state of each entity.
 
 ---
 

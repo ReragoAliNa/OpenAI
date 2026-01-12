@@ -35,10 +35,98 @@ class WorldBuilder(Obj):
         compiler['@coordinate'] = 'local'
         compiler['@meshdir'] = worldgen_path('assets/stls')
         compiler['@texturedir'] = worldgen_path('assets/textures')
+
+        # --- Optimized OpenAI Research Visuals (High Fidelity Mode) ---
+        visual = OrderedDict([
+            ("global", OrderedDict([
+                ("@offwidth", "640"), # Minimum for smooth RL/Playback
+                ("@offheight", "480"), 
+            ])),
+            ("rgba", OrderedDict([
+                ("@fog", "1.0 1.0 1.0 1"),
+            ])),
+            ("quality", OrderedDict([
+                ("@shadowsize", "1024"), # Standard Performance quality
+            ])),
+            ("map", OrderedDict([
+                ("@fogstart", "100"), # push fog back
+                ("@fogend", "200"),
+                ("@haze", "0.00"), # remove haze
+            ]))
+        ])
+
+        asset = OrderedDict([
+            ("texture", [
+                OrderedDict([
+                    ("@name", "skybox"),
+                    ("@type", "skybox"),
+                    ("@builtin", "gradient"),
+                    ("@rgb1", "0.95 0.95 1.0"), # Ultra-bright top
+                    ("@rgb2", "1.0 1.0 1.0"), # Pure white bottom
+                    ("@width", "512"),
+                    ("@height", "512"),
+                ]),
+                OrderedDict([
+                    ("@name", "grid"),
+                    ("@type", "2d"),
+                    ("@builtin", "checker"),
+                    ("@rgb1", ".6 .6 .6"), # Distinct Grey
+                    ("@rgb2", ".9 .9 .9"), # White-ish
+                    ("@width", "512"),
+                    ("@height", "512"),
+                ])
+            ]),
+            ("material", [
+                OrderedDict([
+                    ("@name", "grid"),
+                    ("@texture", "grid"),
+                    ("@texrepeat", "15 15"), # Matches grid_size=30 (15*2)
+                    ("@reflectance", "0.2") 
+                ])
+            ])
+        ])
+
         option = OrderedDict()
         option["flag"] = OrderedDict([("@warmstart", "enable")])
-        return OrderedDict([('compiler', compiler),
-                            ('option', option)])
+        
+        # Performance-Optimized Studio Lighting
+        worldbody = OrderedDict([
+            ("light", [
+                OrderedDict([
+                    ("@name", "sun"),
+                    ("@pos", "5 5 10"), # Moved sun slightly
+                    ("@dir", "-1 -1 -2"), # Angled down-left-forward to potentiall hit wall sides
+                    ("@directional", "true"),
+                    ("@castshadow", "true"), 
+                    ("@diffuse", "0.7 0.7 0.7"),
+                    ("@specular", "0.2 0.2 0.2")
+                ]),
+                OrderedDict([
+                    ("@name", "ambient_fill"),
+                    ("@pos", "-5 -5 10"),
+                    ("@dir", "1 1 -1"),
+                    ("@directional", "true"),
+                    ("@diffuse", "0.6 0.6 0.6"), # Brighter fill
+                    ("@castshadow", "false") 
+                ]),
+                OrderedDict([
+                    ("@name", "back_fill"),
+                    ("@pos", "-5 -5 10"),
+                    ("@dir", "1 1 -1"),
+                    ("@directional", "true"),
+                    ("@diffuse", "0.2 0.2 0.2"),
+                    ("@castshadow", "false") # No shadow for back light
+                ])
+            ])
+        ])
+        
+        return OrderedDict([
+            ('compiler', compiler),
+            ('visual', visual),
+            ('asset', asset),
+            ('option', option),
+            ('worldbody', worldbody)
+        ])
 
     def generate_xinit(self):
         return {}  # Builder has no xinit

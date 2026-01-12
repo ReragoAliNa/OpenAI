@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco>
+	<compiler angle="radian" coordinate="local" meshdir="d:/OpenAI/mujoco-worldgen/assets/stls" texturedir="d:/OpenAI/mujoco-worldgen/assets/textures"></compiler>
+	<visual>
+		<global offwidth="1920" offheight="1080"></global>
+		<rgba fog="1.0 1.0 1.0 1"></rgba>
+		<quality shadowsize="4096"></quality>
+		<map fogstart="100" fogend="200" haze="0.00"></map>
+	</visual>
+	<asset>
+		<texture name="skybox" type="skybox" builtin="gradient" rgb1="0.95 0.95 1.0" rgb2="1.0 1.0 1.0" width="512" height="512"></texture>
+		<texture name="grid" type="2d" builtin="checker" rgb1=".8 .8 .8" rgb2=".95 .95 .95" width="512" height="512"></texture>
+		<texture name="agent0:smiley" file="smiley.png" gridsize="3 4" gridlayout=".U..LFRB.D.."></texture>
+		<texture name="agent1:smiley" file="smiley.png" gridsize="3 4" gridlayout=".U..LFRB.D.."></texture>
+		<texture name="agent2:smiley" file="smiley.png" gridsize="3 4" gridlayout=".U..LFRB.D.."></texture>
+		<texture name="agent3:smiley" file="smiley.png" gridsize="3 4" gridlayout=".U..LFRB.D.."></texture>
+		<material name="grid" texture="grid" texrepeat="15 15" reflectance="0.2"></material>
+		<material name="agent0:matSmiley" texture="agent0:smiley" specular="1" shininess="0.3" reflectance="0"></material>
+		<material name="agent1:matSmiley" texture="agent1:smiley" specular="1" shininess="0.3" reflectance="0"></material>
+		<material name="agent2:matSmiley" texture="agent2:smiley" specular="1" shininess="0.3" reflectance="0"></material>
+		<material name="agent3:matSmiley" texture="agent3:smiley" specular="1" shininess="0.3" reflectance="0"></material>
+		<material name="ramp0:rampmat" specular="1" shininess="0.3" reflectance="0" rgba="0 0.5 1 1"></material>
+		<mesh file="ramp.stl" name="ramp0:ramp" scale="0.5 0.5 0.5"></mesh>
+	</asset>
+	<option timestep="0.005">
+		<flag warmstart="enable"></flag>
+	</option>
+	<worldbody>
+		<light name="sun" pos="0 0 10" dir="0 0 -1" directional="true" castshadow="true" diffuse="0.8 0.8 0.8" specular="0.1 0.1 0.1"></light>
+		<light name="ambient_fill" pos="5 5 10" dir="-1 -1 -1" directional="true" diffuse="0.4 0.4 0.4" castshadow="false"></light>
+		<light name="back_fill" pos="-5 -5 10" dir="1 1 -1" directional="true" diffuse="0.2 0.2 0.2" castshadow="false"></light>
+		<geom name="floor0" pos="3 3 0" size="3 3 1" type="plane" condim="3" material="grid" friction="0.2"></geom>
+		<body name="floor0" pos="3 3 0"></body>
+		<body name="wall0" pos="0.1 3 0.25">
+			<geom size="0.05 2.85 0.25" type="box" condim="3" name="wall0" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall1" pos="3 0.1 0.25">
+			<geom size="2.85 0.05 0.25" type="box" condim="3" name="wall1" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall2" pos="5.9 3 0.25">
+			<geom size="0.05 2.85 0.25" type="box" condim="3" name="wall2" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall3" pos="3 5.9 0.25">
+			<geom size="2.85 0.05 0.25" type="box" condim="3" name="wall3" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall4" pos="3.1 1 0.25">
+			<geom size="0.05 0.85 0.25" type="box" condim="3" name="wall4" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall5" pos="3.1 2.8 0.25">
+			<geom size="0.05 0.25 0.25" type="box" condim="3" name="wall5" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall6" pos="3.5 3.1 0.25">
+			<geom size="0.35 0.05 0.25" type="box" condim="3" name="wall6" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="wall7" pos="5.2 3.1 0.25">
+			<geom size="0.65 0.05 0.25" type="box" condim="3" name="wall7" rgba="0.9 0.9 0.9 1" group="1" friction="0.01"></geom>
+		</body>
+		<body name="agent0:particle" pos="0.15 0.15 0.15">
+			<joint axis="1 0 0" damping="10" name="agent0:tx" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 1 0" damping="10" name="agent0:ty" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="1" name="agent0:tz" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="10" name="agent0:rz" pos="0 0 0" type="hinge"></joint>
+			<geom name="agent0:agent" material="agent0:matSmiley" mass="1" pos="0 0 0" rgba="0.18 0.73 0.95 1" size="0.15" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent0:arm1" mass="0" pos="-0.13 -0.075 -0.05" rgba="0.18 0.73 0.95 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent0:arm2" mass="0" pos="0.13 -0.075 -0.05" rgba="0.18 0.73 0.95 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+		</body>
+		<body name="agent1:particle" pos="0.15 0.15 0.15">
+			<joint axis="1 0 0" damping="10" name="agent1:tx" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 1 0" damping="10" name="agent1:ty" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="1" name="agent1:tz" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="10" name="agent1:rz" pos="0 0 0" type="hinge"></joint>
+			<geom name="agent1:agent" material="agent1:matSmiley" mass="1" pos="0 0 0" rgba="0.18 0.73 0.95 1" size="0.15" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent1:arm1" mass="0" pos="-0.13 -0.075 -0.05" rgba="0.18 0.73 0.95 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent1:arm2" mass="0" pos="0.13 -0.075 -0.05" rgba="0.18 0.73 0.95 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+		</body>
+		<body name="agent2:particle" pos="0.15 0.15 0.15">
+			<joint axis="1 0 0" damping="10" name="agent2:tx" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 1 0" damping="10" name="agent2:ty" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="1" name="agent2:tz" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="10" name="agent2:rz" pos="0 0 0" type="hinge"></joint>
+			<geom name="agent2:agent" material="agent2:matSmiley" mass="1" pos="0 0 0" rgba="0.95 0.3 0.3 1" size="0.15" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent2:arm1" mass="0" pos="-0.13 -0.075 -0.05" rgba="0.95 0.3 0.3 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent2:arm2" mass="0" pos="0.13 -0.075 -0.05" rgba="0.95 0.3 0.3 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+		</body>
+		<body name="agent3:particle" pos="0.15 0.15 0.15">
+			<joint axis="1 0 0" damping="10" name="agent3:tx" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 1 0" damping="10" name="agent3:ty" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="1" name="agent3:tz" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="10" name="agent3:rz" pos="0 0 0" type="hinge"></joint>
+			<geom name="agent3:agent" material="agent3:matSmiley" mass="1" pos="0 0 0" rgba="0.95 0.3 0.3 1" size="0.15" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent3:arm1" mass="0" pos="-0.13 -0.075 -0.05" rgba="0.95 0.3 0.3 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+			<geom name="agent3:arm2" mass="0" pos="0.13 -0.075 -0.05" rgba="0.95 0.3 0.3 1" size="0.05" type="sphere" euler="1.57 0 0" friction="0.01"></geom>
+		</body>
+		<body name="moveable_box0" pos="0.25 0.25 0.25">
+			<joint name="moveable_box0:slide0" axis="1 0 0" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box0:slide1" axis="0 1 0" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box0:slide2" axis="0 0 1" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box0:hinge2" axis="0 0 1" type="hinge" damping="0.01" pos="0 0 0"></joint>
+			<geom size="0.25 0.25 0.25" type="box" condim="3" name="moveable_box0" rgba="0.22 0.72 0.15 1" mass="1" friction="0.2"></geom>
+		</body>
+		<body name="moveable_box1" pos="0.25 0.25 0.25">
+			<joint name="moveable_box1:slide0" axis="1 0 0" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box1:slide1" axis="0 1 0" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box1:slide2" axis="0 0 1" type="slide" damping="0.01" pos="0 0 0"></joint>
+			<joint name="moveable_box1:hinge2" axis="0 0 1" type="hinge" damping="0.01" pos="0 0 0"></joint>
+			<geom size="0.25 0.25 0.25" type="box" condim="3" name="moveable_box1" rgba="0.22 0.72 0.15 1" mass="1" friction="0.2"></geom>
+		</body>
+		<body name="ramp0:ramp" pos="0.25 0.25 0.25">
+			<geom name="ramp0:ramp" pos="0 0 0" type="mesh" mesh="ramp0:ramp" mass="1" material="ramp0:rampmat" rgba="0.22 0.72 0.15 1" friction="0.01"></geom>
+			<joint axis="1 0 0" damping="0.1" name="ramp0:tx" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 1 0" damping="0.1" name="ramp0:ty" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="0.1" name="ramp0:tz" pos="0 0 0" type="slide"></joint>
+			<joint axis="0 0 1" damping="0.1" name="ramp0:rz" pos="0 0 0" type="hinge"></joint>
+		</body>
+	</worldbody>
+	<equality>
+		<weld name="agent0:gripper" body1="agent0:particle" body2="floor0" active="false"></weld>
+		<weld name="agent1:gripper" body1="agent1:particle" body2="floor0" active="false"></weld>
+		<weld name="agent2:gripper" body1="agent2:particle" body2="floor0" active="false"></weld>
+		<weld name="agent3:gripper" body1="agent3:particle" body2="floor0" active="false"></weld>
+	</equality>
+	<actuator>
+		<motor name="agent0:motortx" gear="100" joint="agent0:tx"></motor>
+		<motor name="agent0:motorty" gear="100" joint="agent0:ty"></motor>
+		<motor name="agent0:motorrz" gear="100" joint="agent0:rz"></motor>
+		<motor name="agent1:motortx" gear="100" joint="agent1:tx"></motor>
+		<motor name="agent1:motorty" gear="100" joint="agent1:ty"></motor>
+		<motor name="agent1:motorrz" gear="100" joint="agent1:rz"></motor>
+		<motor name="agent2:motortx" gear="100" joint="agent2:tx"></motor>
+		<motor name="agent2:motorty" gear="100" joint="agent2:ty"></motor>
+		<motor name="agent2:motorrz" gear="100" joint="agent2:rz"></motor>
+		<motor name="agent3:motortx" gear="100" joint="agent3:tx"></motor>
+		<motor name="agent3:motorty" gear="100" joint="agent3:ty"></motor>
+		<motor name="agent3:motorrz" gear="100" joint="agent3:rz"></motor>
+	</actuator>
+</mujoco>
