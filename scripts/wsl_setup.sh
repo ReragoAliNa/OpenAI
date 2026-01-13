@@ -47,8 +47,8 @@ if [ ! -d "mujoco210" ]; then
         echo "发现本地文件，正在解压..."
         cp "$PROJECT_ROOT/mujoco210.tar.gz" .
     else
-        echo "⚠️  本地未找到 mujoco210.tar.gz，正在尝试从镜像源(GHProxy)下载..."
-        wget -q --show-progress "https://mirror.ghproxy.com/https://github.com/deepmind/mujoco/releases/download/2.1.0/mujoco210-linux-x86_64.tar.gz" -O mujoco210.tar.gz
+        echo "⚠️  本地未找到 mujoco210.tar.gz，正在尝试从 mujoco.org 下载..."
+        wget -q --show-progress https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz -O mujoco210.tar.gz
     fi
 
     # 解压安装
