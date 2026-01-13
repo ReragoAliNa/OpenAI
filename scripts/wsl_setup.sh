@@ -87,7 +87,8 @@ cd "$PROJECT_ROOT"
 # 7. 安装 Python 依赖
 echo "[7/8] 安装 Python 依赖（这可能需要几分钟）..."
 pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow==1.15.0
-pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple click xmltodict scipy gym==0.10.8 jsonnet numpy-stl mujoco-py
+pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple "cython<3" "numpy<1.22"
+pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple click xmltodict "scipy<1.8" gym==0.10.8 jsonnet numpy-stl "mujoco-py<2.2,>=2.1"
 pip install -q -i https://pypi.tuna.tsinghua.edu.cn/simple cloudpickle baselines opencv-python pytest
 
 echo "安装 mujoco-worldgen..."
