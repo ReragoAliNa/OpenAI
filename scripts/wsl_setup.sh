@@ -42,13 +42,22 @@ cd ~/.mujoco
 # 获取 MuJoCo 安装目录 (已在顶部获取 PROJECT_ROOT)
 
 if [ ! -d "mujoco210" ]; then
+    # 尝试查找或下载 MuJoCo
     if [ -f "$PROJECT_ROOT/mujoco210.tar.gz" ]; then
+        echo "发现本地文件，正在解压..."
         cp "$PROJECT_ROOT/mujoco210.tar.gz" .
+    else
+        echo "⚠️  本地未找到 mujoco210.tar.gz，正在尝试从 mujoco.org 下载..."
+        wget -q --show-progress https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz -O mujoco210.tar.gz
+    fi
+
+    # 解压安装
+    if [ -f "mujoco210.tar.gz" ]; then
         tar -xzf mujoco210.tar.gz
         rm mujoco210.tar.gz
         echo "✓ MuJoCo 已安装"
     else
-        echo "✗ 错误: 未能在 $PROJECT_ROOT 找到 mujoco210.tar.gz"
+        echo "✗ 错误: 下载失败，请检查网络或手动将 mujoco210.tar.gz 放入 $PROJECT_ROOT"
         exit 1
     fi
 else
